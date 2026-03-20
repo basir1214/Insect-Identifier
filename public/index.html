@@ -181,6 +181,7 @@
 
     .upload-zone {
       position: relative;
+      isolation: isolate;
       padding: 72px 40px;
       text-align: center;
       cursor: pointer;
@@ -299,7 +300,15 @@
       letter-spacing: .5px;
     }
 
-    input[type="file"] { display: none; }
+    input[type="file"] {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+      z-index: 10;
+    }
 
     /* ── Preview ── */
     .preview-box {
@@ -984,7 +993,6 @@
     let currentFile = null;
 
     // ── Upload ──
-    zone.addEventListener('click', () => fileInput.click());
     fileInput.addEventListener('change', e => { if (e.target.files[0]) pick(e.target.files[0]); });
     zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('over'); });
     zone.addEventListener('dragleave', () => zone.classList.remove('over'));
